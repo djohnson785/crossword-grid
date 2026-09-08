@@ -1,0 +1,18 @@
+{
+  "name": "crossword-grid",
+  "version": "0.1.0",
+  "description": "Numbering, slot extraction, and symmetry checks for crossword grids",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test dist/test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
