@@ -85,8 +85,30 @@ puzzle.clues.down;
 `parseIpuz` also takes an already-parsed object, so a puzzle fetched as
 JSON doesn't need to be stringified first. Clue text is returned as flat
 lists rather than merged into `Grid.slots()`, since matching clue numbers
-to slots is a separate step. The older binary `.puz` format isn't
-supported yet.
+to slots is a separate step.
+
+## Reading .puz files
+
+`.puz` is the older Across Lite binary format that most crossword
+syndicates still export. `parsePuz` reads its bytes the same way `parseIpuz`
+reads JSON:
+
+```ts
+import { readFileSync } from "node:fs";
+import { parsePuz } from "crossword-grid";
+
+const puzzle = parsePuz(readFileSync("puzzle.puz"));
+puzzle.grid.slots();
+puzzle.clues.across;
+puzzle.clues.down;
+puzzle.checksumValid; // false if the file's checksum doesn't match its contents
+```
+
+`.puz` files carry a checksum over their own contents; `parsePuz` verifies
+it but does not throw on a mismatch, since a hand-edited file is still
+worth reading. If `puzzle.scrambled` is true, the solution letters are
+scrambled (an Across Lite "lock" feature) and `puzzle.solution` will not
+contain the real answers; descrambling is not implemented.
 
 ## Building and testing
 
@@ -103,5 +125,6 @@ as one line rather than a new test function.
 ## Status
 
 Early. Numbering, slot extraction, 180-degree symmetry checking, and
-reading ipuz files work. Not yet covered: the .puz format, associating
-clue text with individual slots, and fill validation.
+reading ipuz and .puz files work. Not yet covered: associating clue text
+with individual slots (both readers return clue text as flat lists), and
+fill validation.

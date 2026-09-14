@@ -2,9 +2,9 @@
  * Reader for the ipuz crossword interchange format (http://ipuz.org).
  * ipuz encodes a puzzle as plain JSON, which keeps this file a JSON.parse
  * plus a mapping from ipuz's cell encoding to the black/white pattern the
- * rest of this library expects. The older .puz binary format is not
- * handled here; it needs its own bit-level reader and checksum validation,
- * which is a separate piece of work.
+ * rest of this library expects. The older .puz binary format has its own
+ * reader in ./puz.ts, since it needs bit-level parsing and checksum
+ * validation instead of a JSON.parse.
  */
 
 import { Grid } from "./grid";
